@@ -1,0 +1,40 @@
+.clear {
+    clear: both;
+}
+
+.section {
+    float: left;
+    margin-right: 30px;
+}
+
+.cell {
+    position: relative;
+    background-color: lightyellow;
+    width: 100%;
+    height: 100%;
+}
+
+.cell-content {
+    position: relative;
+    top: 50%;
+    translate: 0 -50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: monospace;
+}
+
+.list-container {
+    width: fit-content;
+    height: fit-content;
+    background-color: maroon;
+    border: 1px solid lightgray;
+}
+
+.button-group {
+    margin-top: 10px;
+}
+
+.button-group-nav {
+    margin-top: 10px;
+}

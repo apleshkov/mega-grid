@@ -1,0 +1,31 @@
+{
+  "name": "mega-grid",
+  "version": "1.0.0",
+  "author": "apleshkov",
+  "license": "MIT",
+  "description": "Vanilla virtualized lists & grids. Horizontal scrolling is also supported.",
+  "keywords": [
+    "virtualized",
+    "virtual",
+    "list",
+    "grid",
+    "scrolling",
+    "infinite",
+    "table",
+    "spreadsheet",
+    "vanilla"
+  ],
+  "scripts": {
+    "build": "npx tsc",
+    "tester": "npx esbuild tests/test.ts --bundle --outdir=tests/dist --target=es6 --watch"
+  },
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "devDependencies": {
+    "esbuild": "^0.19.4",
+    "typescript": "^5.2.2"
+  }
+}
