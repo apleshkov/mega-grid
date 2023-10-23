@@ -2,6 +2,8 @@
 
 Virtualized lists & grids with unlimited number of rows and columns to display any amount of data.
 
+![Demo](https://github.com/apleshkov/mega-grid/blob/main/demo.gif)
+
 ## Features
 
 * Vertical & horizontal scrolling
