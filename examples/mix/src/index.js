@@ -140,7 +140,7 @@ const totalCount = 10_000;
 ((target) => {
     const cellTpl = document.createElement("template");
     cellTpl.innerHTML = '<div class="cell"><div class="cell-content"></div></div>';
-    const grid = horz.grid(550, 100)
+    const grid = horz.grid(650, 100)
         .rows(1, 80, 2, 0)
         .withCell(() => {
             const c = cellTpl.content.cloneNode(true);
@@ -211,7 +211,7 @@ const totalCount = 10_000;
     const cellTpl = document.createElement("template");
     cellTpl.innerHTML = '<div class="cell"><div class="cell-content"></div></div>';
 
-    const grid = horz.grid(550, 200)
+    const grid = horz.grid(650, 200)
         .rows(2, 95, 2, 2)
         .withCell(() => {
             const c = cellTpl.content.cloneNode(true);
