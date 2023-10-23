@@ -217,4 +217,4 @@ document.addEventListener("keydown", (e) => {
     }
 });
 ```
-<img src="https://github.com/apleshkov/mega-grid/blob/main/assets/demo.gif" width="659" height="107" alt="Focusing" />
+<img src="https://github.com/apleshkov/mega-grid/blob/main/assets/focus1.gif" width="659" height="107" alt="Focusing" />
