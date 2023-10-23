@@ -1,10 +1,9 @@
 # mega-grid
 
-Virtualized lists & grids.
+Virtualized lists & grids with unlimited number of rows and columns to display any amount of data.
 
 ## Features
 
-* Lists & grids with unlimited number of rows and columns to display any amount of data
 * Vertical & horizontal scrolling
 * Auto item sizing using col/row count
 * Auto col/row count using static item size
