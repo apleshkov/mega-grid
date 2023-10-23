@@ -4,7 +4,7 @@ Virtualized lists & grids.
 
 ## Features
 
-* Lists & Grids with unlimited number of rows and columns to display any amount of data
+* Lists & grids with unlimited number of rows and columns to display any amount of data
 * Vertical & horizontal scrolling
 * Auto item sizing using col/row count
 * Auto col/row count using static item size
@@ -26,7 +26,7 @@ npm i mega-grid
 
 ## Usage
 
-Vertical grid with 3 columns to show 100,000 items.
+Vertical grid with **3 columns** to show 100,000 items.
 ```js
 import { vert } from "mega-grid";
 
@@ -58,7 +58,7 @@ vert
     .insertTo(document.getElementById("app"));
 ```
 
-Horizontal list (just 1 row) to show 100,000 items.
+Horizontal **list** (just 1 row) to show 100,000 items.
 ```js
 import { horz } from "mega-grid";
 
@@ -90,7 +90,7 @@ horz
     .insertTo(document.getElementById("app"));
 ```
 
-Vertical grid with static item size to show 100,000 items.
+Vertical grid with **static item size** to show 100,000 items.
 ```js
 import { vert } from "mega-grid";
 
