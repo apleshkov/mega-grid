@@ -41,7 +41,7 @@ const totalCount = 10_000;
     function syncFocus(animated = true) {
         const top = grid.originOfItem(cursor).y;
         focus.style.top = top + "px";
-        grid.scrollToItem(cursor, animated, "middle");
+        grid.scrollToItem(cursor, animated, "center");
     }
     syncFocus(false);
 
@@ -50,7 +50,7 @@ const totalCount = 10_000;
         const target = e.target;
         if (target.hasAttribute("data-scroll-top")) {
             grid.scrollTo(0, true);
-        } else if (target.hasAttribute("data-scroll-middle")) {
+        } else if (target.hasAttribute("data-scroll-center")) {
             grid.scrollToItem(totalCount / 2, true);
         } else if (target.hasAttribute("data-scroll-bottom")) {
             grid.scrollToEnd(true);
@@ -108,7 +108,7 @@ const totalCount = 10_000;
     function syncFocus(animated = true) {
         const i = cursor.item;
         grid.refresh();
-        grid.scrollToItem(i, animated, "middle");
+        grid.scrollToItem(i, animated, "center");
     }
     syncFocus(false);
 
@@ -117,7 +117,7 @@ const totalCount = 10_000;
         const target = e.target;
         if (target.hasAttribute("data-scroll-top")) {
             grid.scrollTo(0, true);
-        } else if (target.hasAttribute("data-scroll-middle")) {
+        } else if (target.hasAttribute("data-scroll-center")) {
             grid.scrollToItem(totalCount / 2, true);
         } else if (target.hasAttribute("data-scroll-bottom")) {
             grid.scrollToEnd(true);
@@ -176,7 +176,7 @@ const totalCount = 10_000;
     function syncFocus(animated = true) {
         const left = grid.originOfItem(cursor).x;
         focus.style.left = left + "px";
-        grid.scrollToItem(cursor, animated, "middle");
+        grid.scrollToItem(cursor, animated, "center");
     }
     syncFocus(false);
 
@@ -185,7 +185,7 @@ const totalCount = 10_000;
         const target = e.target;
         if (target.hasAttribute("data-scroll-left")) {
             grid.scrollTo(0, true);
-        } else if (target.hasAttribute("data-scroll-middle")) {
+        } else if (target.hasAttribute("data-scroll-center")) {
             grid.scrollToItem(totalCount / 2, true);
         } else if (target.hasAttribute("data-scroll-right")) {
             grid.scrollToEnd(true);
@@ -243,7 +243,7 @@ const totalCount = 10_000;
     function syncFocus(animated = true) {
         const i = cursor.item;
         grid.refresh();
-        grid.scrollToItem(i, animated, "middle");
+        grid.scrollToItem(i, animated, "center");
     }
     syncFocus(false);
 
@@ -252,7 +252,7 @@ const totalCount = 10_000;
         const target = e.target;
         if (target.hasAttribute("data-scroll-left")) {
             grid.scrollTo(0, true);
-        } else if (target.hasAttribute("data-scroll-middle")) {
+        } else if (target.hasAttribute("data-scroll-center")) {
             grid.scrollToItem(totalCount / 2, true);
         } else if (target.hasAttribute("data-scroll-right")) {
             grid.scrollToEnd(true);
