@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "apleshkov",
   "license": "MIT",
-  "description": "Vanilla virtualized lists & grids. Horizontal scrolling is also supported.",
+  "description": "Vanilla virtualized lists & grids (vertical & horizontal)",
   "keywords": [
     "virtualized",
     "virtual",
