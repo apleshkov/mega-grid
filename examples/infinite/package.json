@@ -1,0 +1,12 @@
+{
+    "private": true,
+    "scripts": {
+        "bundler": "npx esbuild src/index.js src/index.css --bundle --outdir=www/x --servedir=www --target=es6 --sourcemap --watch"
+    },
+    "dependencies": {
+        "mega-grid": "file://../../"
+    },
+    "devDependencies": {
+        "esbuild": "^0.19.4"
+    }
+}
