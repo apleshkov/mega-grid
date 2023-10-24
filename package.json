@@ -17,8 +17,7 @@
   ],
   "scripts": {
     "build": "npx tsc",
-    "tester": "npx esbuild tests/test.ts --bundle --outdir=tests/dist --target=es6 --watch",
-    "publish": "npm run build && npm publish"
+    "tester": "npx esbuild tests/test.ts --bundle --outdir=tests/dist --target=es6 --watch"
   },
   "files": [
     "dist"
