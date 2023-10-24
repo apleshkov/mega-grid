@@ -271,6 +271,31 @@ const vertCases: TestCase[] = [
                 TestCells.vertMap(sizing, new IndexRange(0, 2 + 2))
             );
         }
+    },
+    {
+        name: "vert.Scroller: queue test",
+        test: () => {
+            const sizing = new vert.ColSizing(
+                new Size(500, 350),
+                1,
+                85,
+                Inset.all(2),
+                20,
+                new Spacing(0, 2)
+            );
+            const cells = new TestCells(sizing, "vert");
+            const scroller = new vert.Scroller(
+                sizing,
+                2,
+                cells.init.bind(cells),
+                cells.enqueue.bind(cells),
+                cells.dequeue.bind(cells),
+                0
+            );
+            for (let i = 0; i <= sizing.contentSize.height; i += 1) {
+                scroller.scroll(i);
+            }
+        }
     }
 ];
 
@@ -538,6 +563,31 @@ const horzCases: TestCase[] = [
                 TestCells.horzMap(sizing, new IndexRange(0, 2 + 2))
             );
         }
+    },
+    {
+        name: "horz.Scroller: queue test",
+        test: () => {
+            const sizing = new horz.RowSizing(
+                new Size(350, 500),
+                1,
+                85,
+                Inset.all(2),
+                20,
+                new Spacing(2, 0)
+            );
+            const cells = new TestCells(sizing, "horz");
+            const scroller = new horz.Scroller(
+                sizing,
+                2,
+                cells.init.bind(cells),
+                cells.enqueue.bind(cells),
+                cells.dequeue.bind(cells),
+                0
+            );
+            for (let i = 0; i <= sizing.contentSize.width; i += 1) {
+                scroller.scroll(i);
+            }
+        }
     }
 ];
 
@@ -570,7 +620,10 @@ class TestCells {
 
     dequeue(k: number) {
         if (!this.map.has(k)) {
-            const cells = this.queue.pop()!;
+            const cells = this.queue.pop();
+            if (!cells) {
+                throw new Error(`Queue is empty`);
+            }
             this.map.set(k, cells);
         }
     }

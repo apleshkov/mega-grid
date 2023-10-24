@@ -20,7 +20,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     private map: Map<number, ScrollingCell<C>[]> = new Map();
     private scroller: Scroller;
 
-    private abortController: AbortController | null | undefined;
+    private abortController = new AbortController();
 
     get sizeInfo(): SizeInfo {
         return this.sizing;
@@ -59,6 +59,11 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
             this.enqueueRow.bind(this),
             this.dequeueRow.bind(this),
             0
+        );
+        this.scrollable.addEventListener(
+            "scroll",
+            () => this.scroller.scroll(this.scrollable.scrollTop),
+            { signal: this.abortController.signal, passive: true }
         );
     }
 
@@ -138,6 +143,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     setItemCount(count: number) {
         if (this.sizing.setItemCount(count)) {
             this.content.style.height = `${this.sizing.contentSize.height}px`;
+            this.scroller.scroll(this.scrollTop);
         }
     }
 
@@ -155,16 +161,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     }
 
     insertTo(target: Node, beforeNode: Node | null = null) {
-        if (this.abortController) {
-            throw new Error("Unable to insert: the grid is already inserted");
-        }
-        this.abortController = new AbortController();
         target.insertBefore(this.scrollable, beforeNode);
-        this.scrollable.addEventListener(
-            "scroll",
-            () => this.scroller.scroll(this.scrollable.scrollTop),
-            { signal: this.abortController.signal, passive: true }
-        );
     }
 
     remove() {
@@ -173,12 +170,19 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     }
 
     disconnect() {
-        this.abortController?.abort();
-        this.abortController = null;
+        this.abortController.abort();
     }
 
     get scrollTop(): number {
-        return this.content.scrollTop;
+        return this.scrollable.scrollTop;
+    }
+
+    onScroll(cb: () => void) {
+        this.scrollable.addEventListener(
+            "scroll",
+            () => cb(),
+            { signal: this.abortController.signal, passive: true }
+        );
     }
 
     scrollBy(offset: number, animated: boolean) {

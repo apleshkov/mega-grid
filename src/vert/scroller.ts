@@ -54,9 +54,10 @@ function visibleCount(sizing: Sizing): number {
     const inset = sizing.contentInset.top;
     const itemHeight = sizing.itemSize.height;
     const spacing = sizing.spacing.interRow;
-    return Math.ceil(
+    const lastIndex = Math.ceil(
         (viewHeight - inset) / (itemHeight + spacing)
     );
+    return lastIndex + 1;
 }
 
 function visibleRange(top: number, sizing: Sizing, overscan: number): IndexRange {

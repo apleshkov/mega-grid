@@ -20,7 +20,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     private map: Map<number, ScrollingCell<C>[]> = new Map();
     private scroller: Scroller;
 
-    private abortController: AbortController | null | undefined;
+    private abortController = new AbortController();
 
     get sizeInfo(): SizeInfo {
         return this.sizing;
@@ -59,6 +59,11 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
             this.enqueueCol.bind(this),
             this.dequeueCol.bind(this),
             0
+        );
+        this.scrollable.addEventListener(
+            "scroll",
+            () => this.scroller.scroll(this.scrollable.scrollLeft),
+            { signal: this.abortController.signal, passive: true }
         );
     }
 
@@ -155,16 +160,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     }
 
     insertTo(target: Node, beforeNode: Node | null = null) {
-        if (this.abortController) {
-            throw new Error("Unable to insert: the grid is already inserted");
-        }
-        this.abortController = new AbortController();
         target.insertBefore(this.scrollable, beforeNode);
-        this.scrollable.addEventListener(
-            "scroll",
-            () => this.scroller.scroll(this.scrollable.scrollLeft),
-            { signal: this.abortController.signal, passive: true }
-        );
     }
 
     remove() {
@@ -173,12 +169,19 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     }
 
     disconnect() {
-        this.abortController?.abort();
-        this.abortController = null;
+        this.abortController.abort();
     }
 
     get scrollLeft(): number {
-        return this.content.scrollLeft;
+        return this.scrollable.scrollLeft;
+    }
+
+    onScroll(cb: () => void): void {
+        this.scrollable.addEventListener(
+            "scroll",
+            () => cb(),
+            { signal: this.abortController.signal, passive: true }
+        );
     }
 
     scrollBy(offset: number, animated: boolean) {
