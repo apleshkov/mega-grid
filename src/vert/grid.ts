@@ -5,7 +5,7 @@ import { ScrollingCell, cellLeft, cellTop } from "../scrolling";
 import { SizeInfo, Sizing } from "../sizing";
 import { Scroller } from "./scroller";
 
-export type ScrollPositioning = "top" | "middle" | "bottom";
+export type ScrollPositioning = "top" | "center" | "bottom";
 
 export class Grid<C extends Cell = Cell> implements Griding<C> {
 
@@ -208,14 +208,14 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     scrollToItem(
         item: number,
         animated: boolean,
-        positioning: ScrollPositioning = "middle"
+        positioning: ScrollPositioning = "center"
     ) {
         let top = this.originOfItem(item).y;
         const sizing = this.sizing;
         switch (positioning) {
             case "top":
                 break;
-            case "middle":
+            case "center":
                 top += sizing.itemSize.height / 2;
                 top += sizing.spacing.interRow / 2;
                 top -= sizing.viewSize.height / 2;
