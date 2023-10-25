@@ -25,7 +25,7 @@ Virtualized lists & grids with unlimited number of rows and columns to display a
 npm i mega-grid
 ```
 
-## Usage
+## Basic Usage
 
 Vertical grid with **3 columns** to show 100,000 items.
 ```js
@@ -36,12 +36,12 @@ vert
         300, // width
         400  // height
     )
-    .cols(
-        3,  // cols
-        60, // item height (width will be calculated automatically)
-        2,  // inter-col spacing
-        2   // inter-row spacing
-    )
+    .cols({
+        count: 3,
+        itemHeight: 60,
+        colSpacing: 2,
+        rowSpacing: 2
+    })
     .withCell(() => {
         // Cell factory
         const c = document.createElement("div");
@@ -68,12 +68,11 @@ horz
         500, // width
         100  // height
     )
-    .rows(
-        1,  // 1 row
-        60, // item width (height will be calculated automatically)
-        2,  // inter-col spacing
-        0   // inter-row spacing (doesn't matter for 1 row)
-    )
+    .rows({
+        count: 1,
+        itemWidth: 60,
+        colSpacing: 2
+    })
     .withCell(() => {
         // Cell factory
         const c = document.createElement("div");
@@ -97,11 +96,11 @@ import { vert } from "mega-grid";
 
 vert
     .grid(100, 100)
-    .itemSize(
-        40,  // item width
-        60,  // item height
-        2   // inter-row spacing
-    )
+    .itemSize({
+        width: 40,
+        height: 60,
+        rowSpacing: 2
+    })
     .withCell(() => {
         // Cell factory
         const c = document.createElement("div");
@@ -129,7 +128,7 @@ let cursor = 0;
 
 const grid = vert
     .grid(500, 400)
-    .cols(1, ...) // just 1 col for the sake of simplicity
+    .cols({ count: 1 }) // just 1 col for the sake of simplicity
     .withCell(() => {
         // Cell factory
         const c = document.createElement("div");
@@ -176,7 +175,7 @@ import { vert } from "mega-grid";
 
 const grid = vert
     .grid(500, 400)
-    .cols(1, ...) // just 1 col for the sake of simplicity
+    .cols({ count: 1 }) // just 1 col for the sake of simplicity
     .withCell(...)
     .insertTo(document.body);
 
