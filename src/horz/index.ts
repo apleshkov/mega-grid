@@ -5,17 +5,17 @@ import { Grid } from "./grid";
 import { RowSizing, ItemSizing } from "./sizing";
 
 export type GridBuilder = {
-    itemSize(
+    itemSize(params: {
         width: number,
         height: number,
         colSpacing?: number
-    ): GridBuilder;
-    rows(
-        rowCount: number,
+    }): GridBuilder;
+    rows(params: {
+        count: number,
         itemWidth: number,
         colSpacing?: number,
         rowSpacing?: number
-    ): GridBuilder;
+    }): GridBuilder;
 
     contentInset(inset: number | { left?: number, top?: number, right?: number, bottom?: number } | Inset): GridBuilder;
     itemCount(v: number): GridBuilder;
@@ -35,7 +35,7 @@ export function grid(viewWidth: number, viewHeight: number): GridBuilder {
     let createCell: (() => Cell) | undefined;
     let overscan = 2;
     return {
-        itemSize(width, height, colSpacing) {
+        itemSize({ width, height, colSpacing }) {
             buildSizing = () => new ItemSizing(
                 viewSize,
                 new Size(width, height),
@@ -45,10 +45,10 @@ export function grid(viewWidth: number, viewHeight: number): GridBuilder {
             );
             return this;
         },
-        rows(rowCount, itemWidth, colSpacing, rowSpacing) {
+        rows({ count, itemWidth, colSpacing, rowSpacing }) {
             buildSizing = () => new RowSizing(
                 viewSize,
-                rowCount,
+                count,
                 itemWidth,
                 contentInset,
                 itemCount,

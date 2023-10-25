@@ -6,7 +6,7 @@ const totalCount = 10_000;
     const cellTpl = document.createElement("template");
     cellTpl.innerHTML = '<div class="cell"><div class="cell-content"></div></div>';
     const grid = vert.grid(300, 400)
-        .cols(1, 60, 0, 2)
+        .cols({ count: 1, itemHeight: 60, rowSpacing: 2 })
         .withCell(() => {
             const c = cellTpl.content.cloneNode(true);
             const content = c.firstChild.firstChild;
@@ -77,7 +77,7 @@ const totalCount = 10_000;
     cellTpl.innerHTML = '<div class="cell"><div class="cell-content"></div></div>';
 
     const grid = vert.grid(300, 400)
-        .cols(2, 60, 2, 2)
+        .cols({ count: 2, itemHeight: 60, colSpacing: 2, rowSpacing: 2 })
         .withCell(() => {
             const c = cellTpl.content.cloneNode(true);
             const content = c.firstChild.firstChild;
@@ -141,7 +141,7 @@ const totalCount = 10_000;
     const cellTpl = document.createElement("template");
     cellTpl.innerHTML = '<div class="cell"><div class="cell-content"></div></div>';
     const grid = horz.grid(650, 100)
-        .rows(1, 80, 2, 0)
+        .rows({ count: 1, itemWidth: 80, colSpacing: 2 })
         .withCell(() => {
             const c = cellTpl.content.cloneNode(true);
             const content = c.firstChild.firstChild;
@@ -212,7 +212,7 @@ const totalCount = 10_000;
     cellTpl.innerHTML = '<div class="cell"><div class="cell-content"></div></div>';
 
     const grid = horz.grid(650, 200)
-        .rows(2, 95, 2, 2)
+        .rows({ count: 2, itemWidth: 95, colSpacing: 2, rowSpacing: 2 })
         .withCell(() => {
             const c = cellTpl.content.cloneNode(true);
             const content = c.firstChild.firstChild;

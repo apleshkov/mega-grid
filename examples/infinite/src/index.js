@@ -44,7 +44,7 @@ const rect = listEl.getBoundingClientRect();
 const cell = document.getElementById("cell");
 const grid = vert
     .grid(rect.width, rect.height)
-    .cols(1, 80, 0, 2)
+    .cols({ count: 1, itemHeight: 80, rowSpacing: 2 })
     .withCell(() => {
         const c = cell.content.cloneNode(true);
         const img = c.querySelector(".avatar");
