@@ -1,4 +1,4 @@
-import { strictEq, truthy } from "./assert";
+import { eqSizes, strictEq, truthy } from "./assert";
 import { Inset, Size, Spacing } from "../src/geometry";
 import * as vert from "../src/vert";
 import * as horz from "../src/horz";
@@ -54,7 +54,9 @@ const vertCases: TestCase[] = [
             strictEq(s.rowCount, 12);
             strictEq(s.contentSize.height, 12 * 10 + 3 * 11 + (1 + 1));
             strictEq(s.spacing.interCol, 1);
-            s.setViewSize(new Size(20, 11));
+            const newSize = new Size(20, 11);
+            s.setViewSize(newSize);
+            eqSizes(s.viewSize, newSize);
             strictEq(s.colCount, 1);
             strictEq(s.rowCount, 100);
             strictEq(s.contentSize.height, 100 * 10 + 99 * 3 + (1 + 1));
@@ -78,6 +80,26 @@ const vertCases: TestCase[] = [
             s.setItemCount(10);
             strictEq(s.rowCount, 2);
             strictEq(s.contentSize.height, 2 * 10 + 1 * 7 + 18);
+        }
+    },
+    {
+        name: "vert.ItemSizing: minColSpacing",
+        test: () => {
+            const s = new vert.ItemSizing(
+                new Size(100, 100),
+                new Size(40, 50),
+                new Inset(),
+                100,
+                0,
+                3
+            );
+            strictEq(s.colCount, 2);
+            strictEq(s.rowCount, 100 / 2);
+            strictEq(s.spacing.interCol, 100 - 40 * 2);
+            s.setViewSize(new Size(80, 100));
+            strictEq(s.colCount, 1);
+            strictEq(s.rowCount, 100 / 1);
+            strictEq(s.spacing.interCol, 3);
         }
     },
     //
@@ -127,7 +149,9 @@ const vertCases: TestCase[] = [
             strictEq(s.rowCount, 10);
             strictEq(s.contentSize.height, 10 * 10 + 9 * 3 + (1 + 1));
             strictEq(s.spacing.interCol, 1);
-            s.setViewSize(new Size(20, 11));
+            const newSize = new Size(20, 11);
+            s.setViewSize(newSize);
+            eqSizes(s.viewSize, newSize);
             strictEq(s.itemSize.width, (20 - (1 + 1) - 1 * 9) / 10);
             strictEq(s.rowCount, 10);
             strictEq(s.contentSize.height, 10 * 10 + 9 * 3 + (1 + 1));
@@ -346,7 +370,9 @@ const horzCases: TestCase[] = [
             strictEq(s.rowCount, 9);
             strictEq(s.contentSize.width, 12 * 10 + 3 * 11 + (1 + 1));
             strictEq(s.spacing.interRow, 1);
-            s.setViewSize(new Size(20, 11));
+            const newSize = new Size(20, 11);
+            s.setViewSize(newSize);
+            eqSizes(s.viewSize, newSize);
             strictEq(s.colCount, 100);
             strictEq(s.rowCount, 1);
             strictEq(s.contentSize.width, 100 * 10 + 99 * 3 + (1 + 1));
@@ -370,6 +396,26 @@ const horzCases: TestCase[] = [
             s.setItemCount(10);
             strictEq(s.colCount, 2);
             strictEq(s.contentSize.width, 2 * 10 + 1 * 7 + 18);
+        }
+    },
+    {
+        name: "horz.ItemSizing: minRowSpacing",
+        test: () => {
+            const s = new horz.ItemSizing(
+                new Size(100, 100),
+                new Size(50, 40),
+                new Inset(),
+                100,
+                0,
+                3
+            );
+            strictEq(s.rowCount, 2);
+            strictEq(s.colCount, 100 / 2);
+            strictEq(s.spacing.interRow, 100 - 40 * 2);
+            s.setViewSize(new Size(100, 80));
+            strictEq(s.rowCount, 1);
+            strictEq(s.colCount, 100 / 1);
+            strictEq(s.spacing.interRow, 3);
         }
     },
     //
@@ -419,7 +465,9 @@ const horzCases: TestCase[] = [
             strictEq(s.colCount, 10);
             strictEq(s.contentSize.width, 10 * 10 + 9 * 3 + (1 + 1));
             strictEq(s.spacing.interRow, 1);
-            s.setViewSize(new Size(11, 20));
+            const newSize = new Size(11, 20);
+            s.setViewSize(newSize);
+            eqSizes(s.viewSize, newSize);
             strictEq(s.itemSize.height, (20 - (1 + 1) - 1 * 9) / 10);
             strictEq(s.colCount, 10);
             strictEq(s.contentSize.width, 10 * 10 + 9 * 3 + (1 + 1));

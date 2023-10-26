@@ -8,7 +8,8 @@ export type GridBuilder = {
     itemSize(params: {
         width: number,
         height: number,
-        rowSpacing?: number
+        rowSpacing?: number,
+        minColSpacing?: number
     }): GridBuilder;
     cols(params: {
         count: number,
@@ -35,13 +36,14 @@ export function grid(viewWidth: number, viewHeight: number): GridBuilder {
     let createCell: (() => Cell) | undefined;
     let overscan = 2;
     return {
-        itemSize({ width, height, rowSpacing }) {
+        itemSize({ width, height, rowSpacing, minColSpacing }) {
             buildSizing = () => new ItemSizing(
                 viewSize,
                 new Size(width, height),
                 contentInset,
                 itemCount,
-                rowSpacing
+                rowSpacing,
+                minColSpacing
             );
             return this;
         },

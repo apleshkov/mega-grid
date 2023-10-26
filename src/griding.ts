@@ -3,7 +3,8 @@ import { Point, Size } from "./geometry";
 
 export interface Griding<C extends Cell> {
 
-    setViewSize(viewSize: Size): void;
+    setViewSize(width: number, height: number): void;
+
     setItemCount(count: number): void;
 
     addContentOverlay<T extends Node>(overlay: T): T;

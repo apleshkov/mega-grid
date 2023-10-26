@@ -1,3 +1,4 @@
+export * from "./geometry";
 export * from "./sizing";
 export * from "./cell";
 

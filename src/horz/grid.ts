@@ -121,11 +121,12 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
         this.map.set(col, cells);
     }
 
-    setViewSize(viewSize: Size) {
-        if (this.sizing.setViewSize(viewSize)) {
+    setViewSize(width: number, height: number) {
+        if (this.sizing.setViewSize(new Size(width, height))) {
             const content = this.content;
             const scrollable = this.scrollable;
             this.content.replaceChildren();
+            this.map.clear();
             this.scroller = new Scroller(
                 this.sizing,
                 this.overscan,
@@ -134,8 +135,8 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
                 this.dequeueCol.bind(this),
                 scrollable.scrollLeft
             );
-            scrollable.style.width = `${viewSize.width}px`;
-            scrollable.style.height = `${viewSize.height}px`;
+            scrollable.style.width = `${width}px`;
+            scrollable.style.height = `${height}px`;
             content.style.width = `${this.sizing.contentSize.width}px`;
         }
     }

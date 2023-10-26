@@ -19,6 +19,8 @@ export class ItemSizing implements Sizing {
     private _spacing = new Spacing();
     get spacing() { return this._spacing; }
 
+    private readonly minColSpacing;
+
     private _colCount: number;
     get colCount() { return this._colCount; }
 
@@ -31,18 +33,23 @@ export class ItemSizing implements Sizing {
         contentInset = new Inset(),
         itemCount = 0,
         rowSpacing = 0,
+        minColSpacing = 0
     ) {
         this._viewSize = viewSize;
         this.itemSize = itemSize;
         this._contentInset = contentInset;
         this._itemCount = itemCount;
         const contentWidth = viewSize.width;
-        const cols = colCount(itemSize.width, contentWidth, contentInset);
+        const cols = colCount(itemSize.width, contentWidth, contentInset, minColSpacing);
         this._colCount = cols;
         const rows = rowCount(cols, itemCount);
         this._rowCount = rows;
-        this._spacing.interCol = colSpacing(itemSize.width, contentWidth, contentInset, cols);
+        this._spacing.interCol = Math.max(
+            minColSpacing,
+            colSpacing(itemSize.width, contentWidth, contentInset, cols)
+        );
         this._spacing.interRow = rowSpacing;
+        this.minColSpacing = minColSpacing;
         this._contentSize = new Size(
             contentWidth,
             contentHeight(itemSize.height, rowSpacing, rows, contentInset)
@@ -53,15 +60,19 @@ export class ItemSizing implements Sizing {
         if (this.viewSize.equals(viewSize)) {
             return false;
         }
+        this._viewSize = viewSize;
         const itemCount = this._itemCount;
         const contentWidth = viewSize.width;
         const itemWidth = this.itemSize.width;
         const contentInset = this._contentInset;
-        const cols = colCount(itemWidth, contentWidth, contentInset);
+        const cols = colCount(itemWidth, contentWidth, contentInset, this.minColSpacing);
         const rows = rowCount(cols, itemCount);
         this._colCount = cols;
         this._rowCount = rows;
-        this._spacing.interCol = colSpacing(itemWidth, contentWidth, contentInset, cols);
+        this._spacing.interCol = Math.max(
+            this.minColSpacing,
+            colSpacing(itemWidth, contentWidth, contentInset, cols)
+        );
         this._contentSize = new Size(
             contentWidth,
             contentHeight(this.itemSize.height, this._spacing.interRow, rows, contentInset)
@@ -138,6 +149,7 @@ export class ColSizing implements Sizing {
         if (this.viewSize.equals(viewSize)) {
             return false;
         }
+        this._viewSize = viewSize;
         const itemCount = this._itemCount;
         const contentWidth = viewSize.width;
         const contentInset = this._contentInset;
@@ -171,11 +183,18 @@ export class ColSizing implements Sizing {
 function colCount(
     itemWidth: number,
     contentWidth: number,
-    contentInset: Inset
+    contentInset: Inset,
+    minColSpacing: number
 ): number {
-    return itemWidth > 0
-        ? Math.max(1, Math.floor(contentInset.insetWidth(contentWidth) / itemWidth))
-        : 0;
+    if (itemWidth === 0) {
+        return 0;
+    } else {
+        const w = contentInset.insetWidth(contentWidth);
+        const c = Math.floor(
+            (w + minColSpacing) / (itemWidth + minColSpacing)
+        );
+        return Math.max(1, c);
+    }
 }
 
 function colSpacing(
