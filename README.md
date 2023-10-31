@@ -10,7 +10,7 @@ Virtualized lists & grids with unlimited number of rows and columns to display a
 * Auto item sizing using col/row count
 * Auto col/row count using static item size
 * [Resizable](#resizing) views
-* Updatable item count
+* Updatable item count (useful for e.g. [infinite scroll](#infinite-scroll))
 * Animated (or instant) scrolling to any item by index using different positioning (see `Grid.scrollToItem`)
 * Animated (or instant) scrolling to the end (see `Grid.scrollToEnd`)
 * Custom item [focusing](#focusing)
@@ -216,6 +216,13 @@ document.addEventListener("keydown", (e) => {
     }
 });
 ```
+
+## Infinite Scroll
+
+You can achieve an infinite scroll behavior by updating grid's item count via the `setItemCount` method.
+
+This [example](https://github.com/apleshkov/mega-grid/tree/main/examples/infinite) loads next page when reaches the bottom edge of the scrollable area:
+<img src="https://github.com/apleshkov/mega-grid/blob/main/examples/infinite/demo.gif" width="520" height="408" alt="Infinite Scroll Demo" />
 
 ## Resizing
 
