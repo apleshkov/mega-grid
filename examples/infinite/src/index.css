@@ -14,12 +14,19 @@
     height: 350px;
     margin: 20px 0;
     border: 1px solid lightgray;
+    overflow: hidden;
 }
 
 .cell {
+    height: 100%;
+    background: linear-gradient(#eee, #fff);
+    border-radius: 10px;
+}
+
+.cell-content {
     position: relative;
     top: 50%;
-    translate: 0 -50%;
+    transform: translateY(-50%);
     text-align: center;
 }
 

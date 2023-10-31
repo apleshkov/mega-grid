@@ -37,14 +37,15 @@ function userLoader(limit) {
     };
 }
 
-const users = userLoader(20);
+const users = userLoader(30);
 
 const listEl = document.getElementById("list");
 const rect = listEl.getBoundingClientRect();
 const cell = document.getElementById("cell");
 const grid = vert
     .grid(rect.width, rect.height)
-    .cols({ count: 1, itemHeight: 80, rowSpacing: 2 })
+    .cols({ count: 2, itemHeight: 80, colSpacing: 10, rowSpacing: 10 })
+    .contentInset(10)
     .withCell(() => {
         const c = cell.content.cloneNode(true);
         const img = c.querySelector(".avatar");
@@ -58,6 +59,9 @@ const grid = vert
                 img.src = u.picture.thumbnail;
                 name.innerText = u.name.first + " " + u.name.last;
             },
+            willReuse() {
+                img.src = "";
+            }
         };
     })
     .insertTo(listEl);
