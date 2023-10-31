@@ -6,13 +6,13 @@ Virtualized lists & grids with unlimited number of rows and columns to display a
 
 ## Features
 
-* Vertical & horizontal scrolling
+* Vertical & horizontal scroll
 * Auto item sizing using col/row count
 * Auto col/row count using static item size
 * [Resizable](#resizing) views
 * Updatable item count (useful for e.g. [infinite scroll](#infinite-scroll))
-* Animated (or instant) scrolling to any item by index using different positioning (see `Grid.scrollToItem`)
-* Animated (or instant) scrolling to the end (see `Grid.scrollToEnd`)
+* Animated (or instant) scroll to any item by index using different positioning (see `Grid.scrollToItem`)
+* Animated (or instant) scroll to the end (see `Grid.scrollToEnd`)
 * Custom item [focusing](#focusing)
 * 0 dependencies (only dev ones)
 * Written in Typescript
