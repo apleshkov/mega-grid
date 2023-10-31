@@ -9,7 +9,7 @@ Virtualized lists & grids with unlimited number of rows and columns to display a
 * Vertical & horizontal scrolling
 * Auto item sizing using col/row count
 * Auto col/row count using static item size
-* Resizable views
+* [Resizable](#resizing) views
 * Updatable item count
 * Animated (or instant) scrolling to any item by index using different positioning (see `Grid.scrollToItem`)
 * Animated (or instant) scrolling to the end (see `Grid.scrollToEnd`)
@@ -215,3 +215,16 @@ document.addEventListener("keydown", (e) => {
             break;
     }
 });
+```
+
+## Resizing
+
+It's possible to update grid's view size via the `setViewSize` method.
+
+Every sizing strategy reflects that change in a different way:
+* column count and spacing are updated for **constant item size** (both vertical & horizontal)
+* cell width is updated for **constant column count** (vertical only)
+* cell height is updated for **constant row count** (horizontal only)
+
+You can find an example of resizing vertical grid and contant item sizes [here](https://github.com/apleshkov/mega-grid/tree/main/examples/resizing):
+<img src="https://github.com/apleshkov/mega-grid/blob/main/examples/resizing/demo.gif" width="688" height="552" alt="Resizing Demo" />
