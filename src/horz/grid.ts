@@ -126,6 +126,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
             const content = this.content;
             const scrollable = this.scrollable;
             this.content.replaceChildren();
+            this.queue = [];
             this.map.clear();
             this.scroller = new Scroller(
                 this.sizing,
