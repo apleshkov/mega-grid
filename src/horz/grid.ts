@@ -121,13 +121,19 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
         this.map.set(col, cells);
     }
 
+    private unmountAllCells() {
+        this.queue.forEach((a) => a.forEach((c) => c.unmount()));
+        this.map.forEach((a) => a.forEach((c) => c.unmount()));
+    }
+
     setViewSize(width: number, height: number) {
         if (this.sizing.setViewSize(new Size(width, height))) {
             const content = this.content;
             const scrollable = this.scrollable;
-            this.content.replaceChildren();
+            this.unmountAllCells();
             this.queue = [];
             this.map.clear();
+            content.replaceChildren();
             this.scroller = new Scroller(
                 this.sizing,
                 this.overscan,
@@ -172,6 +178,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
 
     unmount(removing = false) {
         this.abortController.abort();
+        this.unmountAllCells();
         if (removing) {
             this.scrollable.remove();
         }

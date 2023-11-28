@@ -41,6 +41,10 @@ export class ScrollingCell<C extends Cell> {
         this.content.willReuse?.();
     }
 
+    unmount() {
+        this.content.unmount?.();
+    }
+
     setLeft(left: number) {
         this.wrapper.style.left = left + "px";
     }
