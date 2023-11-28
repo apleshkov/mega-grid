@@ -1,5 +1,5 @@
 export interface Cell {
     renderTo(container: HTMLElement): void;
-    update(container: HTMLElement, item: number): void;
+    update(item: number, container: HTMLElement): void;
     willReuse?(): void;
 }

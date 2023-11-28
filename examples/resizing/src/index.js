@@ -16,7 +16,7 @@ const grid = vert
             renderTo(container) {
                 container.appendChild(cell);
             },
-            update(_, item) {
+            update(item) {
                 content.innerText = `Item #${item}`;
             },
         };

@@ -54,7 +54,7 @@ const grid = vert
             renderTo(container) {
                 container.appendChild(c);
             },
-            update(_, item) {
+            update(item) {
                 const u = users.getAt(item);
                 img.src = u.picture.thumbnail;
                 name.innerText = u.name.first + " " + u.name.last;

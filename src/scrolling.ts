@@ -34,7 +34,7 @@ export class ScrollingCell<C extends Cell> {
     }
 
     update(item: number) {
-        this.content.update(this.wrapper, item);
+        this.content.update(item, this.wrapper);
     }
 
     willReuse() {

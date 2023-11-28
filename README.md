@@ -49,7 +49,7 @@ vert
             renderTo(container) {
                 container.appendChild(c);
             },
-            update(_, item) {
+            update(item) {
                 c.innerHTML = `Item #${item}`;
             },
         };
@@ -80,7 +80,7 @@ horz
             renderTo(container) {
                 container.appendChild(c);
             },
-            update(_, item) {
+            update(item) {
                 c.innerHTML = `Item #${item}`;
             },
         };
@@ -108,7 +108,7 @@ vert
             renderTo(container) {
                 container.appendChild(c);
             },
-            update(_, item) {
+            update(item) {
                 c.innerHTML = `Item #${item}`;
             },
         };
@@ -136,7 +136,7 @@ const grid = vert
             renderTo(container) {
                 container.appendChild(c);
             },
-            update(_, item) {
+            update(item) {
                 let html = `Item #${item}`;
                 if (item === cursor) {
                     html = `<strong>${html}</strong>`;

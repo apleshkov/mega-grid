@@ -14,7 +14,7 @@ const totalCount = 10_000;
                 renderTo(container) {
                     container.appendChild(c);
                 },
-                update(_, item) {
+                update(item) {
                     content.innerText = `Item #${item}`;
                 },
             };
@@ -85,7 +85,7 @@ const totalCount = 10_000;
                 renderTo(container) {
                     container.appendChild(c);
                 },
-                update(_, item) {
+                update(item) {
                     const v = `Item #${item}`;
                     if (item === cursor.item) {
                         content.innerHTML = `
@@ -149,7 +149,7 @@ const totalCount = 10_000;
                 renderTo(container) {
                     container.appendChild(c);
                 },
-                update(_, item) {
+                update(item) {
                     content.innerText = `Item #${item}`;
                 },
             };
@@ -220,7 +220,7 @@ const totalCount = 10_000;
                 renderTo(container) {
                     container.appendChild(c);
                 },
-                update(_, item) {
+                update(item) {
                     const v = `Item #${item}`;
                     if (item === cursor.item) {
                         content.innerHTML = `
