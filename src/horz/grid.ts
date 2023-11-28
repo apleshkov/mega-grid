@@ -144,6 +144,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     setItemCount(count: number) {
         if (this.sizing.setItemCount(count)) {
             this.content.style.width = `${this.sizing.contentSize.width}px`;
+            this.scroller.scroll(this.scrollLeft);
         }
     }
 
