@@ -166,12 +166,14 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     }
 
     remove() {
-        this.disconnect();
-        this.scrollable.remove();
+        this.unmount(true);
     }
 
-    disconnect() {
+    unmount(removing = false) {
         this.abortController.abort();
+        if (removing) {
+            this.scrollable.remove();
+        }
     }
 
     get scrollLeft(): number {

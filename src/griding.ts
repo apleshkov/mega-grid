@@ -1,5 +1,5 @@
 import { Cell } from "./cell";
-import { Point, Size } from "./geometry";
+import { Point } from "./geometry";
 
 export interface Griding<C extends Cell> {
 
@@ -12,7 +12,7 @@ export interface Griding<C extends Cell> {
 
     insertTo(target: Node, beforeNode: Node | null): void;
     remove(): void;
-    disconnect(): void;
+    unmount(removing: boolean): void;
 
     onScroll(cb: () => void): void;
     scrollToEnd(animated: boolean): void;
