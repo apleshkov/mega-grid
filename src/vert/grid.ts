@@ -36,6 +36,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
         const scrollable = document.createElement("div");
         scrollable.style.cssText = `
             position: relative;
+            overflow-x: hidden;
             overflow-y: auto;
             width: ${sizing.viewSize.width}px;
             height: ${sizing.viewSize.height}px;
