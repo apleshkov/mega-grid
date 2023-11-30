@@ -29,11 +29,15 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     constructor(
         sizing: Sizing,
         createCell: () => C,
-        overscan: number
+        overscan: number,
+        className?: string
     ) {
         this.sizing = sizing;
         this.overscan = overscan;
         const scrollable = document.createElement("div");
+        if (className) {
+            scrollable.className = className;
+        }
         scrollable.style.cssText = `
             position: relative;
             overflow-x: hidden;

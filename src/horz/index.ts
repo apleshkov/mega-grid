@@ -24,6 +24,8 @@ export type GridBuilder = {
     withCell(fn: () => Cell): GridBuilder;
     overscan(v: number): GridBuilder;
 
+    className(name: string): GridBuilder;
+
     build(): Grid;
     insertTo(target: Node, beforeNode?: Node | null): Grid;
 };
@@ -35,6 +37,7 @@ export function grid(viewWidth: number, viewHeight: number): GridBuilder {
     let buildSizing: (() => Sizing) | undefined;
     let createCell: (() => Cell) | undefined;
     let overscan = 2;
+    let className: string | undefined;
     return {
         itemSize({ width, height, colSpacing, minRowSpacing }) {
             buildSizing = () => new ItemSizing(
@@ -80,6 +83,10 @@ export function grid(viewWidth: number, viewHeight: number): GridBuilder {
             overscan = v;
             return this;
         },
+        className(name) {
+            className = name;
+            return this;
+        },
         build() {
             if (!buildSizing) {
                 throw new Error("Unable to build: no item size information, use `itemSize()` or `cols()`");
@@ -90,7 +97,8 @@ export function grid(viewWidth: number, viewHeight: number): GridBuilder {
             return new Grid(
                 buildSizing(),
                 createCell,
-                overscan
+                overscan,
+                className
             );
         },
         insertTo(target, beforeNode) {
