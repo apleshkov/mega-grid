@@ -210,7 +210,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
 
     scrollTo(position: number, animated: boolean) {
         this.scrollable.scrollTo({
-            top: Math.max(position, this.sizing.contentInset.top),
+            top: position,
             behavior: animated ? "smooth" : "instant"
         });
     }
