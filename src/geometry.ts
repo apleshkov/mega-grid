@@ -1,22 +1,36 @@
 export class Inset {
 
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+
     constructor(
-        public left = 0,
-        public top = 0,
-        public right = 0,
-        public bottom = 0
-    ) { }
-
-    static all(v: number): Inset {
-        return new Inset(v, v, v, v);
+        values?: {
+            top?: number,
+            right?: number,
+            bottom?: number,
+            left?: number
+        }
+    ) {
+        this.top = values?.top ?? 0;
+        this.right = values?.right ?? 0;
+        this.bottom = values?.bottom ?? 0;
+        this.left = values?.left ?? 0;
     }
 
-    static horz(v: number): Inset {
-        return new Inset(v, 0, v, 0);
+    static all(value: number): Inset {
+        return new Inset({
+            top: value, right: value, bottom: value, left: value
+        });
     }
 
-    static vert(v: number): Inset {
-        return new Inset(0, v, 0, v);
+    static horz(value: number): Inset {
+        return new Inset({ left: value, right: value });
+    }
+
+    static vert(value: number): Inset {
+        return new Inset({ top: value, bottom: value });
     }
 
     horz(v: number): Inset {

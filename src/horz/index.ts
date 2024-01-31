@@ -18,7 +18,7 @@ export type GridBuilder = {
         rowSpacing?: number
     }): GridBuilder;
 
-    contentInset(inset: number | { left?: number, top?: number, right?: number, bottom?: number } | Inset): GridBuilder;
+    contentInset(inset: number | { top?: number, right?: number, bottom?: number, left?: number } | Inset): GridBuilder;
     itemCount(v: number): GridBuilder;
 
     withCell(fn: () => Cell): GridBuilder;
@@ -71,7 +71,7 @@ export function grid(viewWidth: number, viewHeight: number): GridBuilder {
             } else if (inset instanceof Inset) {
                 contentInset = inset;
             } else {
-                contentInset = new Inset(inset.left, inset.top, inset.right, inset.bottom);
+                contentInset = new Inset(inset);
             }
             return this;
         },
