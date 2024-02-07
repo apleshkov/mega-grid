@@ -186,7 +186,7 @@ const vertCases: TestCase[] = [
                 new Size(23, 33),
                 new Size(10, 10),
                 Inset.all(1),
-                20,
+                19,
                 1
             );
             strictEq(sizing.colCount, 2);
@@ -502,7 +502,7 @@ const horzCases: TestCase[] = [
                 new Size(33, 23),
                 new Size(10, 10),
                 Inset.all(1),
-                20,
+                19,
                 1
             );
             strictEq(sizing.rowCount, 2);
@@ -639,12 +639,21 @@ const horzCases: TestCase[] = [
     }
 ];
 
+type TestCell = { title: string, visible: boolean };
+
 class TestCells {
 
     sizing: Sizing;
     isVertical: boolean
-    queue: string[][] = [];
-    map: Map<number, string[]> = new Map();
+    queue: TestCell[][] = [];
+    private cellMap: Map<number, TestCell[]> = new Map();
+    get map(): Map<number, string[]> {
+        const result = new Map();
+        for (const [k, cells] of this.cellMap.entries()) {
+            result.set(k, cells.filter((c) => c.visible).map((c) => c.title));
+        }
+        return result;
+    }
 
     constructor(sizing: Sizing, dir: "vert" | "horz") {
         this.sizing = sizing;
@@ -654,34 +663,51 @@ class TestCells {
     init(klen: number) {
         const vlen = this.isVertical ? this.sizing.colCount : this.sizing.rowCount;
         this.queue = Array.from({ length: klen }, () => (
-            Array.from({ length: vlen }, (_, i) => String(i))
+            Array.from({ length: vlen }, (_, i) => ({
+                title: String(i),
+                visible: false
+            }))
         ));
     }
 
     enqueue(k: number) {
-        const cells = this.map.get(k);
+        const cells = this.cellMap.get(k);
         if (cells) {
+            this.cellMap.delete(k);
+            cells.forEach((c) => c.visible = false);
             this.queue.push(cells);
-            this.map.delete(k);
         }
     }
 
     dequeue(k: number) {
-        if (!this.map.has(k)) {
+        if (!this.cellMap.has(k)) {
             const cells = this.queue.pop();
             if (!cells) {
                 throw new Error(`Queue is empty`);
             }
-            this.map.set(k, cells);
+            const { sizing } = this;
+            cells.forEach((c, j) => {
+                const item = this.isVertical
+                    ? (j + k * sizing.colCount)
+                    : (j + k * sizing.rowCount);
+                if (item < sizing.itemCount) {
+                    c.visible = true;
+                }
+            });
+            this.cellMap.set(k, cells);
         }
     }
 
     static vertMap(sz: Sizing, r: IndexRange): Map<number, string[]> {
         const map = new Map();
         for (let row = r.start; row <= r.end; row += 1) {
-            const cells = Array.from({ length: sz.colCount }, (_, col) => (
-                String(col)
-            ));
+            const cells: string[] = [];
+            for (let col = 0; col < sz.colCount; col += 1) {
+                const item = col + row * sz.colCount;
+                if (item < sz.itemCount) {
+                    cells.push(String(col));
+                }
+            }
             map.set(row, cells);
         }
         return map;
@@ -690,9 +716,13 @@ class TestCells {
     static horzMap(sz: Sizing, r: IndexRange): Map<number, string[]> {
         const map = new Map();
         for (let col = r.start; col <= r.end; col += 1) {
-            const cells = Array.from({ length: sz.rowCount }, (_, row) => (
-                String(row)
-            ));
+            const cells: string[] = [];
+            for (let row = 0; row < sz.rowCount; row += 1) {
+                const item = row + col * sz.rowCount;
+                if (item < sz.itemCount) {
+                    cells.push(String(row));
+                }
+            }
             map.set(col, cells);
         }
         return map;

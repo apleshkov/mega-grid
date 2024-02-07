@@ -15,6 +15,7 @@ export class ItemSizing implements Sizing {
     get contentSize() { return this._contentSize; }
 
     private _itemCount: number;
+    get itemCount() { return this._itemCount; }
 
     private _spacing = new Spacing();
     get spacing() { return this._spacing; }
@@ -111,6 +112,7 @@ export class RowSizing implements Sizing {
     get contentSize() { return this._contentSize; }
 
     private _itemCount: number;
+    get itemCount() { return this._itemCount; }
 
     readonly spacing: Spacing;
 

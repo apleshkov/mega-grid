@@ -21,7 +21,7 @@ const grid = vert
             },
         };
     })
-    .itemCount(10_000)
+    .itemCount(7)
     .contentInset(5)
     .insertTo(container);
 

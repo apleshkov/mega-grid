@@ -5,6 +5,7 @@ export interface SizeInfo {
     readonly contentSize: Size;
     readonly contentInset: Inset;
     readonly itemSize: Size;
+    readonly itemCount: number;
     readonly spacing: Spacing;
     readonly colCount: number;
     readonly rowCount: number;

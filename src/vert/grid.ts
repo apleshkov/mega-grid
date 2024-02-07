@@ -120,8 +120,11 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
         const top = cellTop(row, sizing);
         cells.forEach((c, col) => {
             c.setTop(top);
-            c.update(col + row * sizing.colCount);
-            c.setHidden(false);
+            const item = col + row * sizing.colCount;
+            if (item < sizing.itemCount) {
+                c.update(item);
+                c.setHidden(false);
+            }
         });
         this.map.set(row, cells);
     }
