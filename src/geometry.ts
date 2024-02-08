@@ -52,6 +52,13 @@ export class Inset {
     insetHeight(height: number): number {
         return height - (this.top + this.bottom);
     }
+
+    equals(other: Inset): boolean {
+        return this.top === other.top
+            && this.right === other.right
+            && this.bottom === other.bottom
+            && this.left === other.left;
+    }
 }
 
 export class Size {

@@ -57,43 +57,37 @@ export class ItemSizing implements Sizing {
         );
     }
 
-    setViewSize(viewSize: Size) {
-        if (this.viewSize.equals(viewSize)) {
-            return false;
-        }
-        this._viewSize = viewSize;
-        const itemCount = this._itemCount;
-        const contentWidth = viewSize.width;
-        const itemWidth = this.itemSize.width;
-        const contentInset = this._contentInset;
-        const cols = colCount(itemWidth, contentWidth, contentInset, this.minColSpacing);
-        const rows = rowCount(cols, itemCount);
-        this._colCount = cols;
-        this._rowCount = rows;
-        this._spacing.interCol = Math.max(
-            this.minColSpacing,
-            colSpacing(itemWidth, contentWidth, contentInset, cols)
+    newViewSize(viewSize: Size): Sizing {
+        return new ItemSizing(
+            viewSize,
+            this.itemSize,
+            this.contentInset,
+            this.itemCount,
+            this.spacing.interRow,
+            this.minColSpacing
         );
-        this._contentSize = new Size(
-            contentWidth,
-            contentHeight(this.itemSize.height, this._spacing.interRow, rows, contentInset)
-        );
-        return true;
     }
 
-    setItemCount(count: number) {
-        if (this._itemCount === count) {
-            return false;
-        }
-        this._itemCount = count;
-        this._rowCount = rowCount(this._colCount, count);
-        this._contentSize.height = contentHeight(
-            this.itemSize.height,
-            this._spacing.interRow,
-            this._rowCount,
-            this._contentInset
+    newItemCount(count: number): Sizing {
+        return new ItemSizing(
+            this.viewSize,
+            this.itemSize,
+            this.contentInset,
+            count,
+            this.spacing.interRow,
+            this.minColSpacing
         );
-        return true;
+    }
+
+    newContentInset(inset: Inset): Sizing {
+        return new ItemSizing(
+            this.viewSize,
+            this.itemSize,
+            inset,
+            this.itemCount,
+            this.spacing.interRow,
+            this.minColSpacing
+        );
     }
 }
 
@@ -147,38 +141,37 @@ export class ColSizing implements Sizing {
         );
     }
 
-    setViewSize(viewSize: Size) {
-        if (this.viewSize.equals(viewSize)) {
-            return false;
-        }
-        this._viewSize = viewSize;
-        const itemCount = this._itemCount;
-        const contentWidth = viewSize.width;
-        const contentInset = this._contentInset;
-        const cols = this.colCount;
-        const rows = rowCount(cols, itemCount);
-        this._rowCount = rows;
-        this._itemSize.width = itemWidth(contentWidth, contentInset, cols, this.spacing.interCol);
-        this._contentSize = new Size(
-            contentWidth,
-            contentHeight(this.itemSize.height, this.spacing.interRow, rows, contentInset)
+    newViewSize(viewSize: Size): Sizing {
+        return new ColSizing(
+            viewSize,
+            this.colCount,
+            this.itemSize.height,
+            this.contentInset,
+            this.itemCount,
+            this.spacing
         );
-        return true;
     }
 
-    setItemCount(count: number) {
-        if (this._itemCount === count) {
-            return false;
-        }
-        this._itemCount = count;
-        this._rowCount = rowCount(this.colCount, count);
-        this._contentSize.height = contentHeight(
+    newContentInset(inset: Inset): Sizing {
+        return new ColSizing(
+            this.viewSize,
+            this.colCount,
             this.itemSize.height,
-            this.spacing.interRow,
-            this._rowCount,
-            this._contentInset
+            inset,
+            this.itemCount,
+            this.spacing
         );
-        return true;
+    }
+
+    newItemCount(count: number): Sizing {
+        return new ColSizing(
+            this.viewSize,
+            this.colCount,
+            this.itemSize.height,
+            this.contentInset,
+            count,
+            this.spacing
+        );
     }
 }
 

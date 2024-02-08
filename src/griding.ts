@@ -1,9 +1,10 @@
 import { Cell } from "./cell";
-import { Point } from "./geometry";
+import { Inset, Point } from "./geometry";
 
 export interface Griding<C extends Cell> {
 
     setViewSize(width: number, height: number): void;
+    setContentInset(inset: Inset): void;
 
     setItemCount(count: number): void;
 

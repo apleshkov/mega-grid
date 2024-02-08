@@ -43,7 +43,7 @@ const vertCases: TestCase[] = [
     {
         name: "vert.ItemSizing: setViewSize",
         test: () => {
-            const s = new vert.ItemSizing(
+            let s: Sizing = new vert.ItemSizing(
                 new Size(100, 100),
                 new Size(10, 10),
                 Inset.all(1),
@@ -55,7 +55,7 @@ const vertCases: TestCase[] = [
             strictEq(s.contentSize.height, 12 * 10 + 3 * 11 + (1 + 1));
             strictEq(s.spacing.interCol, 1);
             const newSize = new Size(20, 11);
-            s.setViewSize(newSize);
+            s = s.newViewSize(newSize);
             eqSizes(s.viewSize, newSize);
             strictEq(s.colCount, 1);
             strictEq(s.rowCount, 100);
@@ -66,7 +66,7 @@ const vertCases: TestCase[] = [
     {
         name: "vert.ItemSizing: setItemCount",
         test: () => {
-            const s = new vert.ItemSizing(
+            let s: Sizing = new vert.ItemSizing(
                 new Size(98, 142),
                 new Size(10, 10),
                 Inset.horz(5).vert(9),
@@ -77,7 +77,7 @@ const vertCases: TestCase[] = [
             strictEq(s.rowCount, 13);
             strictEq(s.contentSize.height, 13 * 10 + 12 * 7 + (9 + 9));
             strictEq(Math.floor(s.spacing.interCol * 1000), 1142);
-            s.setItemCount(10);
+            s = s.newItemCount(10);
             strictEq(s.rowCount, 2);
             strictEq(s.contentSize.height, 2 * 10 + 1 * 7 + 18);
         }
@@ -85,7 +85,7 @@ const vertCases: TestCase[] = [
     {
         name: "vert.ItemSizing: minColSpacing",
         test: () => {
-            const s = new vert.ItemSizing(
+            let s: Sizing = new vert.ItemSizing(
                 new Size(100, 100),
                 new Size(40, 50),
                 new Inset(),
@@ -96,7 +96,7 @@ const vertCases: TestCase[] = [
             strictEq(s.colCount, 2);
             strictEq(s.rowCount, 100 / 2);
             strictEq(s.spacing.interCol, 100 - 40 * 2);
-            s.setViewSize(new Size(80, 100));
+            s = s.newViewSize(new Size(80, 100));
             strictEq(s.colCount, 1);
             strictEq(s.rowCount, 100 / 1);
             strictEq(s.spacing.interCol, 3);
@@ -137,7 +137,7 @@ const vertCases: TestCase[] = [
     {
         name: "vert.ColSizing: setViewSize",
         test: () => {
-            const s = new vert.ColSizing(
+            let s: Sizing = new vert.ColSizing(
                 new Size(100, 100),
                 10,
                 10,
@@ -150,7 +150,7 @@ const vertCases: TestCase[] = [
             strictEq(s.contentSize.height, 10 * 10 + 9 * 3 + (1 + 1));
             strictEq(s.spacing.interCol, 1);
             const newSize = new Size(20, 11);
-            s.setViewSize(newSize);
+            s = s.newViewSize(newSize);
             eqSizes(s.viewSize, newSize);
             strictEq(s.itemSize.width, (20 - (1 + 1) - 1 * 9) / 10);
             strictEq(s.rowCount, 10);
@@ -160,7 +160,7 @@ const vertCases: TestCase[] = [
     {
         name: "vert.ColSizing: setItemCount",
         test: () => {
-            const s = new vert.ColSizing(
+            let s: Sizing = new vert.ColSizing(
                 new Size(98, 142),
                 10,
                 10,
@@ -171,7 +171,7 @@ const vertCases: TestCase[] = [
             strictEq(s.itemSize.width, (98 - (5 + 5) - 3 * 9) / 10);
             strictEq(s.rowCount, 10);
             strictEq(s.contentSize.height, 10 * 10 + 9 * 7 + (9 + 9));
-            s.setItemCount(10);
+            s = s.newItemCount(10);
             strictEq(s.rowCount, 1);
             strictEq(s.contentSize.height, 1 * 10 + 18);
         }
@@ -359,7 +359,7 @@ const horzCases: TestCase[] = [
     {
         name: "horz.ItemSizing: setViewSize",
         test: () => {
-            const s = new horz.ItemSizing(
+            let s: Sizing = new horz.ItemSizing(
                 new Size(100, 100),
                 new Size(10, 10),
                 Inset.all(1),
@@ -371,7 +371,7 @@ const horzCases: TestCase[] = [
             strictEq(s.contentSize.width, 12 * 10 + 3 * 11 + (1 + 1));
             strictEq(s.spacing.interRow, 1);
             const newSize = new Size(20, 11);
-            s.setViewSize(newSize);
+            s = s.newViewSize(newSize);
             eqSizes(s.viewSize, newSize);
             strictEq(s.colCount, 100);
             strictEq(s.rowCount, 1);
@@ -382,7 +382,7 @@ const horzCases: TestCase[] = [
     {
         name: "horz.ItemSizing: setItemCount",
         test: () => {
-            const s = new horz.ItemSizing(
+            let s: Sizing = new horz.ItemSizing(
                 new Size(142, 98),
                 new Size(10, 10),
                 Inset.horz(9).vert(5),
@@ -393,7 +393,7 @@ const horzCases: TestCase[] = [
             strictEq(s.rowCount, 8);
             strictEq(s.contentSize.width, 13 * 10 + 12 * 7 + (9 + 9));
             strictEq(Math.floor(s.spacing.interRow * 1000), 1142);
-            s.setItemCount(10);
+            s = s.newItemCount(10);
             strictEq(s.colCount, 2);
             strictEq(s.contentSize.width, 2 * 10 + 1 * 7 + 18);
         }
@@ -401,7 +401,7 @@ const horzCases: TestCase[] = [
     {
         name: "horz.ItemSizing: minRowSpacing",
         test: () => {
-            const s = new horz.ItemSizing(
+            let s: Sizing = new horz.ItemSizing(
                 new Size(100, 100),
                 new Size(50, 40),
                 new Inset(),
@@ -412,7 +412,7 @@ const horzCases: TestCase[] = [
             strictEq(s.rowCount, 2);
             strictEq(s.colCount, 100 / 2);
             strictEq(s.spacing.interRow, 100 - 40 * 2);
-            s.setViewSize(new Size(100, 80));
+            s = s.newViewSize(new Size(100, 80));
             strictEq(s.rowCount, 1);
             strictEq(s.colCount, 100 / 1);
             strictEq(s.spacing.interRow, 3);
@@ -424,7 +424,7 @@ const horzCases: TestCase[] = [
     {
         name: "horz.RowSizing: 0x0 in 0x0",
         test: () => {
-            const s = new horz.RowSizing(
+            const s: Sizing = new horz.RowSizing(
                 new Size(0, 0),
                 0,
                 0
@@ -438,7 +438,7 @@ const horzCases: TestCase[] = [
     {
         name: "horz.RowSizing: 10x10 in 100x100",
         test: () => {
-            const s = new horz.RowSizing(
+            const s: Sizing = new horz.RowSizing(
                 new Size(100, 100),
                 10,
                 10,
@@ -453,7 +453,7 @@ const horzCases: TestCase[] = [
     {
         name: "horz.RowSizing: setViewSize",
         test: () => {
-            const s = new horz.RowSizing(
+            let s: Sizing = new horz.RowSizing(
                 new Size(100, 100),
                 10,
                 10,
@@ -466,7 +466,7 @@ const horzCases: TestCase[] = [
             strictEq(s.contentSize.width, 10 * 10 + 9 * 3 + (1 + 1));
             strictEq(s.spacing.interRow, 1);
             const newSize = new Size(11, 20);
-            s.setViewSize(newSize);
+            s = s.newViewSize(newSize);
             eqSizes(s.viewSize, newSize);
             strictEq(s.itemSize.height, (20 - (1 + 1) - 1 * 9) / 10);
             strictEq(s.colCount, 10);
@@ -476,7 +476,7 @@ const horzCases: TestCase[] = [
     {
         name: "horz.RowSizing: setItemCount",
         test: () => {
-            const s = new horz.RowSizing(
+            let s: Sizing = new horz.RowSizing(
                 new Size(142, 98),
                 10,
                 10,
@@ -487,7 +487,7 @@ const horzCases: TestCase[] = [
             strictEq(s.itemSize.height, (98 - (5 + 5) - 3 * 9) / 10);
             strictEq(s.colCount, 10);
             strictEq(s.contentSize.width, 10 * 10 + 9 * 7 + (9 + 9));
-            s.setItemCount(10);
+            s = s.newItemCount(10);
             strictEq(s.colCount, 1);
             strictEq(s.contentSize.width, 1 * 10 + 18);
         }

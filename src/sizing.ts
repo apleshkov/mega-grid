@@ -12,6 +12,7 @@ export interface SizeInfo {
 }
 
 export interface Sizing extends SizeInfo {
-    setViewSize(viewSize: Size): boolean;
-    setItemCount(count: number): boolean;
+    newViewSize(viewSize: Size): Sizing;
+    newContentInset(inset: Inset): Sizing;
+    newItemCount(count: number): Sizing;
 }

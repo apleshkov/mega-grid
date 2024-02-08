@@ -1,4 +1,4 @@
-import { vert } from "mega-grid";
+import { Inset, vert } from "mega-grid";
 
 const container = document.getElementById("container");
 
@@ -66,3 +66,37 @@ document.addEventListener("mouseup", () => {
     syncAnchor();
     grid.setViewSize(rect.width, rect.height);
 });
+
+document.getElementById("buttons").addEventListener(
+    "click",
+    (e) => {
+        e.preventDefault();
+        const el = e.target;
+        if (!e.target) {
+            return;
+        }
+        const dir = el.getAttribute("data-dir");
+        const action = el.getAttribute("data-action");
+        if (dir === "horz") {
+            const inset = new Inset(grid.sizeInfo.contentInset);
+            if (action === "inc") {
+                inset.left += 10;
+                inset.right += 10;
+            } else if (action === "dec") {
+                inset.left -= 10;
+                inset.right -= 10;
+            }
+            grid.setContentInset(inset);
+        } else if (dir === "vert") {
+            const inset = new Inset(grid.sizeInfo.contentInset);
+            if (action === "inc") {
+                inset.top += 10;
+                inset.bottom += 10;
+            } else if (action === "dec") {
+                inset.top -= 10;
+                inset.bottom -= 10;
+            }
+            grid.setContentInset(inset);
+        }
+    }
+);

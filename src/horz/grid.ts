@@ -1,5 +1,5 @@
 import { Cell } from "../cell";
-import { Point, Size } from "../geometry";
+import { Inset, Point, Size } from "../geometry";
 import { Griding } from "../griding";
 import { ScrollingCell, cellLeft, cellTop } from "../scrolling";
 import { SizeInfo, Sizing } from "../sizing";
@@ -135,32 +135,45 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     }
 
     setViewSize(width: number, height: number) {
-        if (this.sizing.setViewSize(new Size(width, height))) {
-            const content = this.content;
-            const scrollable = this.scrollable;
-            this.unmountAllCells();
-            this.queue = [];
-            this.map.clear();
-            content.replaceChildren();
-            this.scroller = new Scroller(
-                this.sizing,
-                this.overscan,
-                this.fillQueue.bind(this),
-                this.enqueueCol.bind(this),
-                this.dequeueCol.bind(this),
-                scrollable.scrollLeft
-            );
-            scrollable.style.width = `${width}px`;
-            scrollable.style.height = `${height}px`;
-            content.style.width = `${this.sizing.contentSize.width}px`;
+        const oldSize = this.sizing.viewSize;
+        if (oldSize.width !== width || oldSize.height !== height) {
+            const newSize = new Size(width, height);
+            this.setSizing(this.sizing.newViewSize(newSize));
+        }
+    }
+
+    setContentInset(inset: Inset) {
+        if (!this.sizing.contentInset.equals(inset)) {
+            this.setSizing(this.sizing.newContentInset(inset));
         }
     }
 
     setItemCount(count: number) {
-        if (this.sizing.setItemCount(count)) {
-            this.content.style.width = `${this.sizing.contentSize.width}px`;
-            this.scroller.scroll(this.scrollLeft);
+        if (this.sizing.itemCount !== count) {
+            this.setSizing(this.sizing.newItemCount(count));
         }
+    }
+
+    private setSizing(newSizing: Sizing) {
+        this.sizing = newSizing;
+        this.unmountAllCells();
+        this.queue = [];
+        this.map.clear();
+        const { content, scrollable } = this;
+        content.replaceChildren();
+        this.scroller = new Scroller(
+            this.sizing,
+            this.overscan,
+            this.fillQueue.bind(this),
+            this.enqueueCol.bind(this),
+            this.dequeueCol.bind(this),
+            scrollable.scrollLeft
+        );
+        const { viewSize, contentSize } = this.sizing;
+        scrollable.style.width = `${viewSize.width}px`;
+        scrollable.style.height = `${viewSize.height}px`;
+        content.style.width = `${contentSize.width}px`;
+        content.style.height = `${contentSize.height}px`;
     }
 
     addContentOverlay<T extends Node>(overlay: T): T {
