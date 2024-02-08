@@ -14,6 +14,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
     private overscan: number;
 
     private content: HTMLElement;
+    private contentOverlay?: HTMLElement;
     private scrollable: HTMLElement;
 
     private queue: ScrollingCell<C>[][] = [];
@@ -51,7 +52,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
+            width: ${sizing.contentSize.width}px;
             height: ${sizing.contentSize.height}px;
         `;
         scrollable.appendChild(content);
@@ -159,7 +160,7 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
         this.unmountAllCells();
         this.queue = [];
         this.map.clear();
-        const { content, scrollable } = this;
+        const { content, scrollable, contentOverlay } = this;
         content.replaceChildren();
         this.scroller = new Scroller(
             this.sizing,
@@ -174,10 +175,28 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
         scrollable.style.height = `${viewSize.height}px`;
         content.style.width = `${contentSize.width}px`;
         content.style.height = `${contentSize.height}px`;
+        if (contentOverlay) {
+            contentOverlay.style.width = `${contentSize.width}px`;
+            contentOverlay.style.height = `${contentSize.height}px`;
+        }
     }
 
-    addContentOverlay<T extends Node>(overlay: T): T {
-        return this.content.insertBefore(overlay, this.content.firstChild);
+    addContentOverlay<T extends Node>(node: T): T {
+        let overlay = this.contentOverlay;
+        if (!overlay) {
+            overlay = document.createElement("div");
+            const { contentSize } = this.sizing;
+            overlay.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: ${contentSize.width}px;
+                height: ${contentSize.height}px;
+            `;
+            this.scrollable.appendChild(overlay);
+            this.contentOverlay = overlay;
+        }
+        return overlay.insertBefore(node, overlay.firstChild);
     }
 
     refresh() {

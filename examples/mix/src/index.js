@@ -33,7 +33,6 @@ const totalCount = 10_000;
         width: ${itemSize.width - 6}px;
         height: ${itemSize.height - 6}px;
         left: ${sizeInfo.contentInset.left}px;
-        z-index: 1;
     `;
     grid.addContentOverlay(focus);
 
@@ -168,7 +167,6 @@ const totalCount = 10_000;
         width: ${itemSize.width - 6}px;
         height: ${itemSize.height - 6}px;
         top: ${sizeInfo.contentInset.top}px;
-        z-index: 1;
     `;
     grid.addContentOverlay(focus);
 
