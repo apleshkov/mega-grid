@@ -1,6 +1,6 @@
 {
   "name": "mega-grid",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "apleshkov",
   "license": "MIT",
   "description": "Vanilla virtualized lists & grids (vertical & horizontal)",
