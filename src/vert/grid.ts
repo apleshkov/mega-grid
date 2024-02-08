@@ -209,11 +209,21 @@ export class Grid<C extends Cell = Cell> implements Griding<C> {
         return this.scrollable.scrollTop;
     }
 
-    onScroll(cb: () => void) {
+    onScroll(
+        cb: () => void,
+        options?: {
+            once?: boolean
+            signal?: AbortSignal
+        }
+    ): void {
         this.scrollable.addEventListener(
             "scroll",
             () => cb(),
-            { signal: this.abortController.signal, passive: true }
+            {
+                signal: options?.signal ?? this.abortController.signal,
+                once: options?.once,
+                passive: true
+            }
         );
     }
 

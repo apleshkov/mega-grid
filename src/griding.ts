@@ -15,7 +15,13 @@ export interface Griding<C extends Cell> {
     remove(): void;
     unmount(removing: boolean): void;
 
-    onScroll(cb: () => void): void;
+    onScroll(
+        cb: () => void,
+        options?: {
+            once?: boolean
+            signal?: AbortSignal
+        }
+    ): void;
     scrollToEnd(animated: boolean): void;
     scrollBy(offset: number, animated: boolean): void;
     scrollTo(position: number, animated: boolean): void;
